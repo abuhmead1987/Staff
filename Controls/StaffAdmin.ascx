@@ -89,7 +89,7 @@
                     </Columns>
                 </asp:GridView>
                 <asp:SqlDataSource ID="SqlDS_Staff" runat="server" ConnectionString='<%$ ConnectionStrings:SiteSqlServer %>'
-                    SelectCommand="SELECT [id],[name],[SortOrder],[description],[imageFileID], [isActive] FROM [Staff_Memeber] where [isDeleted] <> 1 and [ModuleID]=@ModuleID order by [SortOrder] asc, insertDate desc">
+                    SelectCommand="SELECT [id],[name],[SortOrder],[description],[imageFileID], [isActive] FROM [Staff_Memeber] where [isDeleted]=0 and [ModuleID]=@ModuleID order by [SortOrder] asc, insertDate desc">
                     <SelectParameters>
                         <asp:Parameter Name="ModuleID" Type="String"></asp:Parameter>
                     </SelectParameters>

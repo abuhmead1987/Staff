@@ -5,12 +5,14 @@
         <ul class="staffList">
     </HeaderTemplate>
     <ItemTemplate>
-        <li  class="col-md-5 col-sm-12 staffMemeber">
-            <a href='<%# getFilePath(Eval("imageFileID").ToString()) %>'>
-                <img class="staffMemebrPic col-md-5" src='<%# getFilePath(Eval("imageFileID").ToString()) %>' />
-            </a>
-            <div class="staffMemebrDesc col-md-7">
-                <asp:Literal ID="Literal1" runat="server" Text='<%# decodeHTML(Eval("description").ToString())%>'> </asp:Literal>
+        <li class="col-md-6 col-sm-12 ">
+            <div class='staffMemeber'>
+                <a href='<%# getFilePath(Eval("imageFileID").ToString()) %>'>
+                    <img class="staffMemebrPic col-md-5" src='<%# getFilePath(Eval("imageFileID").ToString()) %>' />
+                </a>
+                <div class="staffMemebrDesc col-md-7">
+                    <asp:Literal ID="Literal1" runat="server" Text='<%# decodeHTML(Eval("description").ToString())%>'> </asp:Literal>
+                </div>
             </div>
         </li>
     </ItemTemplate>
@@ -20,7 +22,7 @@
 </asp:Repeater>
 
 <asp:SqlDataSource ID="SqlDS_Staff" runat="server" ConnectionString='<%$ ConnectionStrings:SiteSqlServer %>'
-    SelectCommand="SELECT [id],[name],[description],[imageFileID]FROM [erasmusplus].[dbo].[Staff_Memeber]where [isDeleted] <> 1 and [isActive]=1 and [ModuleID]=@ModuleID">
+    SelectCommand="SELECT [id],[name],[description],[imageFileID]FROM [erasmusplus].[dbo].[Staff_Memeber]where [isDeleted] =0 and [isActive]=1 and [ModuleID]=@ModuleID">
     <SelectParameters>
         <asp:Parameter Name="ModuleID" Type="String"></asp:Parameter>
     </SelectParameters>
@@ -28,17 +30,16 @@
 
 <script type="text/javascript">
     $(function () {
-        setHeight($('.staffList > li'));
+        setHeight($('.staffMemeber'));
     });
-    
+
 
     function setHeight(col) {
-        console.info("Called");
         var $col = $(col);
 
         var $maxHeight = 0;
         $col.each(function () {
-            
+
             var $thisHeight = $(this).outerHeight();
             if ($thisHeight > $maxHeight) {
                 $maxHeight = $thisHeight;

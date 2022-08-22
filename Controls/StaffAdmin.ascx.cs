@@ -53,8 +53,6 @@ namespace Mohammad.Modules.Staff.Controls
         private void ClearValriables()
         {
             Session["currentControl" + ModuleId] = null;
-            Session["CatgoryID" + ModuleId] = -1;
-            Session["ProductID" + ModuleId] = null;
             Session.Clear();
             Response.Redirect(Request.Url.AbsoluteUri);
         }
@@ -66,6 +64,7 @@ namespace Mohammad.Modules.Staff.Controls
             description.RichText.Text = string.Empty;
             txt_Order.Text = "" + SqlHelper.ExecuteScalar(DatabaseHelper.SiteConnStr, CommandType.Text, string.Format("select isnull(max(SortOrder),-1) from [Staff_Memeber] where isDeleted=0 and [ModuleID] ={0}", ModuleId));
             imagePicker1.DataBind();
+            Response.Redirect(Request.Url.AbsoluteUri);
         }
 
         protected void lnkbtn_Save_Click(object sender, EventArgs e)
@@ -111,7 +110,7 @@ namespace Mohammad.Modules.Staff.Controls
             switch (e.CommandName)
             {
                 case "Edit":
-                    string str = string.Format("SELECT [id],[name],[SortOrder],[description],[imageFileID],[isActive],[isDeleted] FROM [Staff_Memeber] where [isDeleted] <> 1 and id = {0}", Session["StaffMemerID" + ModuleId].ToString());
+                    string str = string.Format("SELECT [id],[name],[SortOrder],[description],[imageFileID],[isActive],[isDeleted] FROM [Staff_Memeber] where [isDeleted] =0 and id = {0}", Session["StaffMemerID" + ModuleId].ToString());
                     DataSet dataSet1 = SqlHelper.ExecuteDataset(DatabaseHelper.SiteConnStr, CommandType.Text, str);
                     if (dataSet1.Tables[0].Rows.Count > 0)
                     {
